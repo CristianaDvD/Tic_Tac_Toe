@@ -1,45 +1,50 @@
-import tkinter
-from tkinter import messagebox
 import random
 
 
 # Global variables
 current_player = "X"
-game_board = [[0, 0, 0],
-              [0, 0, 0],
-              [0, 0, 0]]
-turns = 0
+game_board = [" ", " ", " ",
+              " ", " ", " ",
+              " ", " ", " "]
 winner = None
 game_running = True
 
 
-# colors to assign to window game
-color_green = "#00ff00"
-color_red = "#ff0000"
-color_gray = "#343434"
-color_light_gray = "#cccccc"
+def print_game_board(game_board):
+    pass 
 
 
-def error_message():
-    """
-    Creates error message pop up if player clicks a spot
-    already marked.
-    """
-    messagebox.showerror("Oops!", "This spot is already marked!")
-
-
-def mark_choice(row, column):
+def mark_choice(game_board):
     """
     Mark X or O in the chosen spot on the game board
     """
     global current_player
 
-    game_board[row][column]["text"] = current_player
 
+def validation():
+    pass 
+
+
+def switch_player():
+    """
+    Switch player once a spot has been marked.
+    """
+    global current_player    
     if current_player == "X":
         current_player = "O"
     else:
-        current_player = "O"    
+        current_player = "X"    
+
+
+def computer(game_board):
+    """
+    Player against computer. Computer makes the choice. 
+    """
+    while current_player == "O":
+        position = random.randint(0, 8)
+        if game_board[position] == "":
+            game_board[position] = "O"
+            switch_player()
 
 
 def restart_game():
@@ -48,73 +53,10 @@ def restart_game():
 
 def exit_game(game_window):
     pass
+            
 
-
-""" 
-Code inspired from https://www.youtube.com/watch?v=nbRpDXV7QDM
-to create window for tic tac toe game. 
-More info in Readme
-"""
-
-game_window = tkinter.Tk()
-game_window.title("Tic Tac Toe")
-game_window.resizable(False, False)
-
-frame = tkinter.Frame(game_window)
-label = tkinter.Label(frame, text=current_player+"'s turn", 
-                      font=("Lucida Console", 25), 
-                      background=color_gray, foreground="white")
-label.grid(row=0, column=0, columnspan=3, sticky="we")
-
-# Create the board in tkinter with for loop
-for row in range(3):
-    for column in range(3):
-        game_board[row][column] = tkinter.Button(frame, text="", 
-                                                 font=("Lucida Console", 50), 
-                                                 background=color_gray, 
-                                                 foreground="white", 
-                                                 width=4, 
-                                                 height=1,
-                                                 command=lambda row=row, 
-                                                 column=column: 
-                                                 mark_choice(row, column))
-        game_board[row][column].grid(row=row+1, column=column)
-
-restart_button = tkinter.Button(frame, text="Restart Game", 
-                                font=("Lucida Console", 25),
-                                background=color_gray,
-                                foreground=color_green,
-                                command=restart_game)
-restart_button.grid(row=4, column=0, columnspan=3, sticky="we")
-
-exit_button = tkinter.Button(frame, text="Exit Game",
-                             font=("Lucida Console", 25),
-                             background=color_gray, 
-                             foreground=color_red,
-                             command=exit_game(game_window))
-exit_button.grid(row=5, column=0, columnspan=3, sticky="we")
-
-frame.pack()
-
-# Gets the window game to open always in the center
-game_window.update()
-game_window_width = game_window.winfo_width()
-game_window_height = game_window.winfo_height()
-screen_width = game_window.winfo_screenwidth()
-screen_height = game_window.winfo_screenheight()
-
-game_window_x = int((screen_width/2) - (game_window_width/2))
-game_window_y = int((screen_height/2) - (game_window_height/2))
-
-# Formula
-game_window.geometry(
-    f"{game_window_width}x{game_window_height}+{game_window_x}+{game_window_y}"
-    )
-
-# Opens the window game
-game_window.mainloop()
-
-
-def main():
-    mark_choice(row, column)
+while game_running:
+    mark_choice(game_board)
+    switch_player()
+    computer(game_board)
 
