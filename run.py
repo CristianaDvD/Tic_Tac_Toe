@@ -1,4 +1,5 @@
 import random
+import os
 
 
 # Global variables
@@ -8,6 +9,23 @@ game_board = [" ", " ", " ",
               " ", " ", " "]
 winner = None
 game_running = True
+
+
+def clear_screen(numlines=100):
+    """
+    Clears the console to get a better UX.
+    numlines is an optional argument used only as a fall-back (credits to:
+    https://stackoverflow.com/questions/2084508/clear-the-terminal-in-python)
+    """
+    if os.name == "posix":
+        # for OS -> Unix / Linux / MacOS / BSD etc
+        os.system('clear')
+    elif os.name in ("nt", "dos", "ce"):
+        # for OS -> DOS / Windows
+        os.system('CLS') 
+    else:
+        # Fallback for other operating systmes.
+        print('\n' * numlines)       
 
 
 def instructions():
@@ -78,8 +96,10 @@ def exit_game(game_window):
 
 def main():
     """
-    Runs all the program functions
+    Welcomes the user and gives the option to continue or no.
+    Runs all the program functions.
     """
+    
     instructions()
     print_game_board(game_board)
     mark_choice(game_board)
