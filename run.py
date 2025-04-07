@@ -20,9 +20,9 @@ color_gray = "#343434"
 color_light_gray = "#cccccc"
 
 
-def show_error_message():
+def error_message():
     """
-    Opens error message pop up if player clicks a spot
+    Creates error message pop up if player clicks a spot
     already marked.
     """
     messagebox.showerror("Oops!", "This spot is already marked!")
@@ -35,6 +35,11 @@ def mark_choice(row, column):
     global current_player
 
     game_board[row][column]["text"] = current_player
+
+    if current_player == "X":
+        current_player = "O"
+    else:
+        current_player = "O"    
 
 
 def restart_game():
@@ -108,4 +113,8 @@ game_window.geometry(
 
 # Opens the window game
 game_window.mainloop()
+
+
+def main():
+    mark_choice(row, column)
 
