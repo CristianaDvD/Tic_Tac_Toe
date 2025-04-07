@@ -73,12 +73,19 @@ def intro_user_input():
 
 
 def print_game_board(game_board):
-    pass 
-
-
-def mark_choice(game_board):
     """
-    Mark X or O in the chosen spot on the game board
+    Creates the game board
+    """
+    print(game_board[0] + " | " + game_board[1] + " | " + game_board[2] + " |")
+    print("--|---|---|")
+    print(game_board[3] + " | " + game_board[4] + " | " + game_board[5] + " |")
+    print("--|---|---|")
+    print(game_board[6] + " | " + game_board[7] + " | " + game_board[8] + " |")
+
+
+def type_choice(game_board):
+    """
+    Player to choose its spot from 0 to 8 to mark.
     """
     global current_player
 
@@ -121,8 +128,10 @@ def main():
     """
     Runs all the program functions.
     """
+    intro_user_input()
+    show_instructions()
     print_game_board(game_board)
-    mark_choice(game_board)
+    type_choice(game_board)
     switch_player()
     computer(game_board)
 
@@ -130,3 +139,4 @@ def main():
 if __name__ == '__main__':
     while True:
         main()
+
