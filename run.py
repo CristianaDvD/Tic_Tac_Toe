@@ -1,4 +1,5 @@
 import tkinter
+from tkinter import messagebox
 import random
 
 
@@ -19,8 +20,21 @@ color_gray = "#343434"
 color_light_gray = "#cccccc"
 
 
+def show_error_message():
+    """
+    Opens error message pop up if player clicks a spot
+    already marked.
+    """
+    messagebox.showerror("Oops!", "This spot is already marked!")
+
+
 def mark_choice(row, column):
-    pass
+    """
+    Mark X or O in the chosen spot on the game board
+    """
+    global current_player
+
+    game_board[row][column]["text"] = current_player
 
 
 def restart_game():
