@@ -28,11 +28,10 @@ def clear_screen(numlines=100):
         print('\n' * numlines)       
 
 
-def instructions():
+def show_instructions():
     """
     Prints instructions for the game.
     """
-    print("*" * 5 + "Welcome to TIC TAC TOE game" + "*" * 5 + "\n")
     print(">>>>>>>>INSTRUCTIONS<<<<<<<<\n")
     print("Tic-tac-toe is a game played on a three-by-three grid")
     print("by two players, in this case you and the computer, who alternately")
@@ -47,6 +46,30 @@ def instructions():
     print("Whoever gets the first 3 symbols in a row, column or diagonal,")
     print("is the winner of the game!\n")
     print(">>>GOOD LUCK!<<<")
+    print("Type 's' to start the game or 'e' to exit:")
+    
+
+def intro_user_input():
+    """
+    Welcomes the user and gives the option to continue or no.
+    """
+    print("*" * 5 + "Welcome to TIC TAC TOE game" + "*" * 5 + "\n")
+    print("What is your name?")
+    name = input()
+    print("")
+    print("-" * 15)
+    print(f"Hi {name}!")
+    print("Would you like to play Tic Tac Toe?")
+    print("Type 'y' for YES and 'n' for NO:")
+    user_choice = input().strip().lower()
+    if user_choice == 'y':
+        clear_screen()
+        show_instructions()
+    elif user_choice == 'n':
+        clear_screen()
+        print("Thank you! If you change your mind, please press Run program!")
+    else:
+        print("Error! Please type 'y' or 'n'")    
 
 
 def print_game_board(game_board):
@@ -96,11 +119,8 @@ def exit_game(game_window):
 
 def main():
     """
-    Welcomes the user and gives the option to continue or no.
     Runs all the program functions.
     """
-    
-    instructions()
     print_game_board(game_board)
     mark_choice(game_board)
     switch_player()
