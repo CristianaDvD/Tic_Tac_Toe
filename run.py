@@ -67,24 +67,30 @@ def intro_user_input():
     """
     print("\n" + "*" * 5 + "Welcome to TIC TAC TOE game" + "*" * 5 + "\n")
     print("What is your name?")
-    name = input()
+    name = input().capitalize()
     print("")
     print("-" * 15)
-    print(f"Hi {name}!")
-    print("Would you like to play Tic Tac Toe?")
-    print("Type 'y' for YES and 'n' for NO:")
-    user_choice = input().strip().lower()
-    while game_running:
-        if user_choice == 'y':
-            clear_screen()
-            show_instructions()
-        elif user_choice == 'n':
-            clear_screen()
-            print("Thank you! If you change your mind,")
-            print("please press Run program!")
-            break
-        else:
-            print("Error! Please type 'y' or 'n'")    
+    if name.isalpha():
+        print(f"Hi {name}!")
+        print("Would you like to play Tic Tac Toe?")
+        print("Type 'y' for YES and 'n' for NO:")
+        user_choice = input().strip().lower()
+        while game_running:
+            if user_choice == 'y':
+                clear_screen()
+                show_instructions()
+            elif user_choice == 'n':
+                clear_screen()
+                print("Thank you! If you change your mind,")
+                print("please press Run program!")
+                break
+            else:
+                print("Error! Please type 'y' or 'n'") 
+    else:
+        print("Invalid input. Only letters accepted.")
+        print("Please try again.\n")  
+
+    intro_user_input()                 
 
 
 def print_game_board(game_board):
@@ -112,15 +118,23 @@ def type_choice(game_board):
     """
     Player to choose its spot from 1 to 9 to mark.
     """
-    inp = int(input("Choose a spot from 1 to 9: "))
-    if inp >= 1 and inp <= 9 and game_board[inp-1] == " ":
-        game_board[inp-1] = current_player
-    else:
-        raise ValueError("Spot already taken! Try again!")    
-    
-    clear_screen()
-    print_game_board(game_board)        
-      
+    while True:
+        try:
+            inp = int(input("Choose a spot from 1 to 9: "))
+            if inp in range(10) and game_board[inp-1] == " ":
+                game_board[inp-1] = current_player
+            else: 
+                clear_screen()
+                print(f"Invalid value {inp} or spot already taken! Try again!")
+                print_game_board(game_board) 
+        except ValueError as e:
+            print(f"Invalid input {e}. Must be a number from 1- 9.")
+            print_game_board(game_board)          
+        finally:
+            switch_player()
+
+        print_game_board(game_board)        
+
 
 def switch_player():
     """
@@ -129,16 +143,19 @@ def switch_player():
     global current_player    
     if current_player == "X":
         current_player = "O"
+        computer(game_board)
     else:
         current_player = "X"    
 
 
 def computer(game_board):
     """
-    Player against computer. Computer makes the choice. 
+    Computer makes random choice. 
     """
+    global current_player
+
     while current_player == "O":
-        position = random.randint(0, 8)
+        position = random.randint(0, 9)
         if game_board[position] == " ":
             game_board[position] = "O"
             switch_player()
