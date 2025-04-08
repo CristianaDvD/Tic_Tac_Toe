@@ -243,7 +243,19 @@ def restart_game():
     Gives the user the option to restart or quit
     after declaring win or tie.
     """
-    pass        
+    print("\nThank you for playing!")
+    print("Would you like to play again?")
+    print("Please type 'y' if YES or 'n' if NO:")
+    while True:
+        last_choice = input().strip().lower()
+        if last_choice == "y":
+            print_game(game)
+        elif last_choice == "n":
+            clear_screen()
+            print("***Thank you for playing! See you soon!***")
+            quit()
+        else:
+            print("Invalid input. Please type 'y' or 'n'!")        
 
               
 def main():
