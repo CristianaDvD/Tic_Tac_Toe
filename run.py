@@ -22,10 +22,10 @@ def clear_screen(numlines=100):
         os.system('clear')
     elif os.name in ("nt", "dos", "ce"):
         # for OS -> DOS / Windows
-        os.system('CLS') 
+        os.system('CLS')
     else:
         # Fallback for other operating systmes.
-        print('\n' * numlines)       
+        print('\n' * numlines)
 
 
 def show_instructions():
@@ -60,8 +60,6 @@ def show_instructions():
         else:
             print("Error! Please type in 's' or 'e'.")
 
-    show_instructions()                
-    
 
 def intro_user_input():
     """
@@ -76,8 +74,8 @@ def intro_user_input():
         print(f"Hi {name}!")
         print("Would you like to play Tic Tac Toe?")
         print("Type 'y' for YES and 'n' for NO:")
-        user_choice = input().strip().lower()
         while game_running:
+            user_choice = input().strip().lower()
             if user_choice == 'y':
                 clear_screen()
                 show_instructions()
@@ -87,17 +85,16 @@ def intro_user_input():
                 print("***please press Run program!***")
                 quit()
             else:
-                print("Error! Please type 'y' or 'n'.") 
+                print("Error! Please type 'y' or 'n'.")
     else:
         print("Invalid input. Only letters accepted.")
-        print("Please try again.\n")  
-
-    intro_user_input()                 
+        print("Please try again.\n")
+        intro_user_input()
 
 
 def print_game(game):
     """
-    Creates the game board, 
+    Creates the game board,
     and prints reference board first for better UX.
     """
     print("\nReference board:\n")
@@ -123,19 +120,19 @@ def type_choice(game):
     while True:
         try:
             inp = int(input("Choose a spot from 1 to 9: "))
-            if inp in range(10) and game[inp-1] == " ":
+            if inp in range(1, 10) and game[inp-1] == " ":
                 game[inp-1] = current_player
-            else: 
+                declare_win()
+            else:
                 clear_screen()
                 print(f"Invalid value {inp} or spot already taken! Try again!")
-                print_game(game) 
+                print_game(game)
         except ValueError:
-            print(f"Invalid input {inp}. Must be a number from 1- 9.")
-            print_game(game)          
-        finally:
-            switch_player()
-
-        print_game(game)        
+            print("Invalid input. Must be a number from 1- 9.")
+            print_game(game)
+        switch_player()
+        print_game(game)
+        declare_win()
 
 
 def row_win(game):
@@ -143,33 +140,41 @@ def row_win(game):
     Checks for all possible row matches to assign winner.
     """
     global winner
+    global game_running
 
     if game[0] == game[1] == game[2] and game[0] != " ":
         winner = game[0]
+        game_running = False
         return True
     elif game[3] == game[4] == game[5] and game[3] != " ":
         winner = game[3]
+        game_running = False
         return True
     elif game[6] == game[7] == game[8] and game[6] != " ":
         winner = game[6]
+        game_running = False
         return True
-    
+
 
 def column_win(game):
     """
     Checks for all possible column matches to assign winner.
-    """ 
+    """
     global winner
+    global game_running
 
     if game[0] == game[3] == game[6] and game[0] != " ":
         winner = game[0]
+        game_running = False
         return True
     elif game[1] == game[4] == game[7] and game[1] != " ":
         winner = game[1]
+        game_running = False
         return True
     elif game[2] == game[5] == game[8] and game[2] != " ":
         winner = game[2]
-        return True  
+        game_running = False
+        return True
 
 
 def diagonal_win(game):
@@ -177,68 +182,87 @@ def diagonal_win(game):
     Checks for the 2 diagonals matches to assign winner.
     """
     global winner
+    global game_running
 
     if game[0] == game[4] == game[8] and game[0] != " ":
         winner = game[0]
+        game_running = False
         return True
     elif game[2] == game[4] == game[6] and game[2] != " ":
         winner = game[2]
+        game_running = False
         return True
-    
 
-def declare_win(game):
+
+def declare_win():
     """
     Declares the winner of the game.
-    """    
+    """
     global game_running
 
     if column_win(game) or row_win(game) or diagonal_win(game):
+
         if winner == "X":
             print("Congrats! You won the game!")
+            game_running = False
+            restart_game(game)
         elif winner == "O":
             print("Sorry! Computer won!")
-        restart_game()   
-    else:
-        declare_tie(game)         
+            game_running = False
+            restart_game(game)
+
+    elif declare_tie(game):
+        restart_game(game)
 
 
 def declare_tie(game):
     """
     If no winner, declares a tie.
-    """        
+    """
 
     if " " not in game:
         print("No winner on this ocassion. It's a TIE!")
-
-    restart_game()    
+        return True
 
 
 def switch_player():
     """
     Switch player once a spot has been marked.
     """
-    global current_player    
+    global current_player
     if current_player == "X":
         current_player = "O"
         computer(game)
     else:
-        current_player = "X"    
+        current_player = "X"
 
 
 def computer(game):
     """
-    Computer makes random choice. 
+    Computer makes random choice.
     """
     global current_player
 
     while current_player == "O":
-        position = random.randint(0, 8)
+        position = random.randint(1, 9)
         if game[position] == " ":
             game[position] = "O"
+            declare_win()
             switch_player()
 
 
-def restart_game():
+def reset_game():
+    """
+    Clears the game board if user choses to play again
+    at the end of a game.
+    """
+    game.clear()
+    game.extend([" ", " ", " ",
+                 " ", " ", " ",
+                 " ", " ", " "])
+
+
+def restart_game(game):
     """
     Gives the user the option to restart or quit
     after declaring win or tie.
@@ -249,31 +273,25 @@ def restart_game():
     while True:
         last_choice = input().strip().lower()
         if last_choice == "y":
+            reset_game()
+            clear_screen()
             print_game(game)
         elif last_choice == "n":
             clear_screen()
             print("***Thank you for playing! See you soon!***")
             quit()
         else:
-            print("Invalid input. Please type 'y' or 'n'!")        
+            print("Invalid input. Please type 'y' or 'n'!")
 
-              
+
 def main():
     """
-    Runs all the program functions.
+    Calls out the intro to the game.
     """
     while game_running:
         intro_user_input()
-        print_game(game)
-        type_choice(game)
-        switch_player()
-        computer(game)
-        declare_win(game)
-        declare_tie(game)
-        restart_game()
 
 
 if __name__ == '__main__':
     while True:
         main()
-
