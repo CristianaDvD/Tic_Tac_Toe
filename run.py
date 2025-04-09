@@ -1,5 +1,8 @@
 import random
 import os
+import colorama
+from colorama import Fore, Style
+colorama.init(autoreset=True)
 
 
 # Global variables
@@ -32,21 +35,21 @@ def show_instructions():
     """
     Prints instructions for the game.
     """
-    print(">>>>>>>>INSTRUCTIONS<<<<<<<<\n")
-    print("Tic-tac-toe is a game played on a three-by-three grid")
-    print("by two players, in this case you and the computer, who alternately")
-    print("place the marks X and O in one of the nine spaces in the grid.\n")
-    print("Consider a board with the nine positions numbered as follows:\n")
-    print(" 1 | 2 | 3 |")
-    print("---|---|---|")
-    print(" 4 | 5 | 6 |")
-    print("---|---|---|")
-    print(" 7 | 8 | 9 |\n")
-    print("Choose a position from 1 to 9 in order to mark.")
-    print("Whoever gets the first 3 symbols in a row, column or diagonal,")
-    print("is the winner of the game!\n")
-    print(">>>GOOD LUCK!<<<")
-    print("Type 's' to start the game or 'e' to exit:")
+    print(Fore.LIGHTYELLOW_EX + "\n>>>>>>>> INSTRUCTIONS <<<<<<<<\n")
+    print(" Tic-tac-toe is a game played on a three-by-three grid by")
+    print(" two players, in this case you and the computer, who alternately")
+    print(" place the marks X and O in one of the nine spaces in the grid.\n")
+    print(" Consider a board with the nine positions numbered as follows:\n")
+    print(Fore.LIGHTBLUE_EX + Style.BRIGHT + " 1 | 2 | 3 |")
+    print(Fore.LIGHTBLUE_EX + Style.BRIGHT + "---|---|---|")
+    print(Fore.LIGHTBLUE_EX + Style.BRIGHT + " 4 | 5 | 6 |")
+    print(Fore.LIGHTBLUE_EX + Style.BRIGHT + "---|---|---|")
+    print(Fore.LIGHTBLUE_EX + Style.BRIGHT + " 7 | 8 | 9 |\n")
+    print(" Choose a position from 1 to 9 in order to mark.")
+    print(" Whoever gets the first 3 symbols in a row, column or diagonal,")
+    print(" is the winner of the game!\n")
+    print(Fore.GREEN + ">>>GOOD LUCK!<<<\n")
+    print(" Type 's' to start the game or 'e' to exit:")
     while game_running:
         play_choice = input().strip().lower()
         if play_choice == 's':
@@ -54,26 +57,28 @@ def show_instructions():
             print_game(game)
         elif play_choice == 'e':
             clear_screen()
-            print("**Thank you! If you change your mind,**")
-            print("***please press Run program!***")
+            print(Fore.LIGHTGREEN_EX +
+                  "** Thank you! If you change your mind, **")
+            print(Fore.LIGHTGREEN_EX + "*** please press Run program! ***")
             quit()
         else:
-            print("Error! Please type in 's' or 'e'.")
+            print(Fore.LIGHTRED_EX + "Error! Please type in 's' or 'e'.")
 
 
 def intro_user_input():
     """
     Welcomes the user and gives the option to continue or no.
     """
-    print("\n" + "*" * 5 + "Welcome to TIC TAC TOE game" + "*" * 5 + "\n")
-    print("What is your name?")
+    print("\n" + Fore.LIGHTYELLOW_EX + Style.BRIGHT +
+          "*" * 5 + " Welcome to TIC TAC TOE game " + "*" * 5 + "\n")
+    print(" What is your name?")
     name = input().capitalize()
     print("")
-    print("-" * 15)
+    print("-" * 15 + "\n")
     if name.isalpha():
-        print(f"Hi {name}!")
-        print("Would you like to play Tic Tac Toe?")
-        print("Type 'y' for YES and 'n' for NO:")
+        print(f"{Fore.LIGHTGREEN_EX} Hi {name}! (•◡•) /\n")
+        print(" Would you like to play Tic Tac Toe?")
+        print(" Type 'y' for YES and 'n' for NO:")
         while game_running:
             user_choice = input().strip().lower()
             if user_choice == 'y':
@@ -81,14 +86,15 @@ def intro_user_input():
                 show_instructions()
             elif user_choice == 'n':
                 clear_screen()
-                print("**Thank you! If you change your mind,**")
-                print("***please press Run program!***")
+                print(Fore.LIGHTGREEN_EX +
+                      "** Thank you! If you change your mind, **")
+                print(Fore.LIGHTGREEN_EX + "*** please press Run program! ***")
                 quit()
             else:
-                print("Error! Please type 'y' or 'n'.")
+                print(Fore.LIGHTRED_EX + " Error! Please type 'y' or 'n'.")
     else:
-        print("Invalid input. Only letters accepted.")
-        print("Please try again.\n")
+        print(Fore.LIGHTRED_EX + " Invalid input. Only letters accepted.")
+        print(Fore.LIGHTRED_EX + " Please try again.\n")
         intro_user_input()
 
 
@@ -97,18 +103,19 @@ def print_game(game):
     Creates the game board,
     and prints reference board first for better UX.
     """
-    print("\nReference board:\n")
-    print("1 | 2 | 3 |")
-    print("--|---|---|")
-    print("4 | 5 | 6 |")
-    print("--|---|---|")
-    print("7 | 8 | 9 |\n")
-    print("Live play board:\n")
-    print(game[0] + " | " + game[1] + " | " + game[2] + " |")
-    print("--|---|---|")
-    print(game[3] + " | " + game[4] + " | " + game[5] + " |")
-    print("--|---|---|")
-    print(game[6] + " | " + game[7] + " | " + game[8] + " |")
+    print(Fore.LIGHTYELLOW_EX + "\n Reference board:\n")
+    print(Fore.LIGHTYELLOW_EX + "1 | 2 | 3 |")
+    print(Fore.LIGHTYELLOW_EX + "--|---|---|")
+    print(Fore.LIGHTYELLOW_EX + "4 | 5 | 6 |")
+    print(Fore.LIGHTYELLOW_EX + "--|---|---|")
+    print(Fore.LIGHTYELLOW_EX + "7 | 8 | 9 |\n")
+    print(Fore.BLUE + " Live play board:\n")
+    print(Fore.BLUE + game[0] + " | " + game[1] + " | " + game[2] + " |")
+    print(Fore.BLUE + "--|---|---|")
+    print(Fore.BLUE + game[3] + " | " + game[4] + " | " + game[5] + " |")
+    print(Fore.BLUE + "--|---|---|")
+    print(Fore.BLUE + game[6] + " | " + game[7] + " | " + game[8] + " |" +
+          "\n")
 
     type_choice(game)
 
@@ -119,16 +126,18 @@ def type_choice(game):
     """
     while True:
         try:
-            inp = int(input("Choose a spot from 1 to 9: \n"))
+            inp = int(input(" Choose a spot from 1 to 9: \n"))
             if inp in range(1, 10) and game[inp-1] == " ":
                 game[inp-1] = current_player
                 declare_win()
             else:
                 clear_screen()
-                print(f"Invalid value {inp} or spot already taken! Try again!")
+                print(f"{Fore.LIGHTRED_EX}Invalid value {inp} or spot" +
+                      "already taken! Try again!")
                 print_game(game)
         except ValueError:
-            print("Invalid input. Must be a number from 1- 9.")
+            print(Fore.LIGHTRED_EX +
+                  " Invalid input. Must be a number from 1- 9.")
             print_game(game)
         switch_player()
         print_game(game)
@@ -203,11 +212,13 @@ def declare_win():
     if column_win(game) or row_win(game) or diagonal_win(game):
 
         if winner == "X":
-            print("Congrats! You won the game!")
+            print(Fore.LIGHTGREEN_EX + Style.BRIGHT +
+                  "☆★☆Congrats! You won the game!☆★☆")
             game_running = False
             restart_game(game)
         elif winner == "O":
-            print("Sorry! Computer won!")
+            print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT +
+                  "Sorry! Computer won! ◉︵◉")
             game_running = False
             restart_game(game)
 
@@ -221,7 +232,8 @@ def declare_tie(game):
     """
 
     if " " not in game:
-        print("No winner on this ocassion. It's a TIE!")
+        print(Fore.BLUE + Style.BRIGHT +
+              " No winner on this ocassion. It's a TIE! ( •_•)")
         return True
 
 
@@ -278,10 +290,12 @@ def restart_game(game):
             print_game(game)
         elif last_choice == "n":
             clear_screen()
-            print("***Thank you for playing! See you soon!***")
+            print(Fore.CYAN + Style.BRIGHT +
+                  "\n***Thank you for playing! See you soon!***")
             quit()
         else:
-            print("Invalid input. Please type 'y' or 'n'!")
+            print(Fore.LIGHTRED_EX +
+                  "Invalid input. Please type 'y' or 'n'!")
 
 
 def main():
