@@ -119,7 +119,7 @@ def type_choice(game):
     """
     while True:
         try:
-            inp = int(input("Choose a spot from 1 to 9: "))
+            inp = int(input("Choose a spot from 1 to 9: \n"))
             if inp in range(1, 10) and game[inp-1] == " ":
                 game[inp-1] = current_player
                 declare_win()
