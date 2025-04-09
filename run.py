@@ -244,7 +244,7 @@ def computer(game):
     global current_player
 
     while current_player == "O":
-        position = random.randint(1, 9)
+        position = random.randint(0, 8)
         if game[position] == " ":
             game[position] = "O"
             declare_win()
