@@ -133,7 +133,7 @@ def type_choice(game):
             else:
                 clear_screen()
                 print(f"{Fore.LIGHTRED_EX}Invalid value {inp} or spot" +
-                      "already taken! Try again!")
+                      " already taken! Try again!")
                 print_game(game)
         except ValueError:
             print(Fore.LIGHTRED_EX +
@@ -279,9 +279,9 @@ def restart_game(game):
     Gives the user the option to restart or quit
     after declaring win or tie.
     """
-    print("\nThank you for playing!")
-    print("Would you like to play again?")
-    print("Please type 'y' if YES or 'n' if NO:")
+    print("\n Thank you for playing!")
+    print(" Would you like to play again?")
+    print(" Please type 'y' if YES or 'n' if NO:")
     while True:
         last_choice = input().strip().lower()
         if last_choice == "y":
@@ -291,11 +291,11 @@ def restart_game(game):
         elif last_choice == "n":
             clear_screen()
             print(Fore.CYAN + Style.BRIGHT +
-                  "\n***Thank you for playing! See you soon!***")
+                  "\n*** Thank you for playing! See you soon! ***")
             quit()
         else:
             print(Fore.LIGHTRED_EX +
-                  "Invalid input. Please type 'y' or 'n'!")
+                  " Invalid input. Please type 'y' or 'n'!")
 
 
 def main():
